@@ -1,6 +1,7 @@
 import datetime
 import logging
 import sys
+import threading
 
 PYTHON3_PATH = "/usr/bin/python3"
 REGAINER_PATH = "/usr/bin/regainer.py"
@@ -9,6 +10,9 @@ ALLOWED_EXTENSIONS = [".flac"]
 
 MODIFICATION_DATETIME_DELTA = datetime.timedelta(days=5)
 MODIFICATION_DATETIME_THRESHOLD = datetime.datetime.now() - MODIFICATION_DATETIME_DELTA
+
+MAX_CONCURRENCY = 4
+SEMAPHORE = threading.Semaphore(value=MAX_CONCURRENCY)
 
 LOGGER_NAME = "replay-gain-calculator"
 LOG_FORMAT = "[%(asctime)-15s: %(levelname)s/%(funcName)s] %(message)s"
