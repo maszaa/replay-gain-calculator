@@ -48,6 +48,10 @@ def read_path(path, jobs):
 
   for item in path_content:
     full_path = os.path.join(path, item)
+
+    if any(exclude_path_pattern in full_path for exclude_path_pattern in EXCLUDE_PATH_PATTERNS):
+      LOGGER.warning(f"Path {full_path} is excluded, exclusions:\n{EXCLUDE_PATH_PATTERNS}")
+      continue
     if os.path.isfile(full_path) and any(extension in item for extension in ALLOWED_EXTENSIONS) and music_files_found is False:
       modified_at = datetime.datetime.fromtimestamp(os.path.getmtime(full_path))
       if modified_at > MODIFICATION_DATETIME_THRESHOLD:

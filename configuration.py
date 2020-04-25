@@ -30,6 +30,8 @@ STDERR_HANDLER.setFormatter(LOG_FORMATTER)
 STDERR_HANDLER.setLevel(logging.ERROR)
 LOGGER.addHandler(STDERR_HANDLER)
 
+EXCLUDE_PATH_PATTERNS = []
+
 try:
   from local_configuration import *
 except ModuleNotFoundError:
