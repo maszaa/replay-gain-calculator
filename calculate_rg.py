@@ -64,11 +64,22 @@ def read_path(path, jobs):
       LOGGER.info(f"Found sub directory {full_path}")
       read_path(full_path, jobs)
 
-def handle_jobs(jobs):
-  for job in jobs:
-    job.start()
-    LOGGER.info(f"Started job {job.name}")
+def handle_jobs(jobs, retrying=False):
+  failed_starts = []
 
   for job in jobs:
+    try:
+      job.start()
+      LOGGER.info(f"Started job {job.name}, retrying: {retrying}")
+    except RuntimeError:
+      msg_end = "retrying once" if not retrying else "not retrying"
+      LOGGER.warning(f"Failed to start job {job.name}, {msg_end}")
+      if retrying is False:
+        failed_starts.append(retrying)
+
+  for job in [j for j in jobs if j not in failed_starts]:
     job.join()
     LOGGER.info(f"Job {job.name} ready")
+
+  if retrying is False:
+    handle_jobs(failed_starts, retrying=True)
