@@ -14,7 +14,7 @@ def calculate_replay_gain(path, path_content):
     music_files = [f for f in path_content if os.path.isfile(os.path.join(path, f)) and any(extension in f for extension in ALLOWED_EXTENSIONS)]
 
     result = subprocess.run(
-      [PYTHON3_PATH, REGAINER_PATH, *music_files],
+      [PYTHON3_PATH, REGAINER_PATH, *REGAINER_ARGS, *music_files],
       cwd=path,
       capture_output=True
     )

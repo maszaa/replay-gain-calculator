@@ -6,6 +6,8 @@ import threading
 PYTHON3_PATH = "/usr/bin/python3"
 REGAINER_PATH = "/usr/bin/regainer.py"
 
+REGAINER_ARGS = ["--preserve-album-gain"]
+
 ALLOWED_EXTENSIONS = [".flac"]
 
 MODIFICATION_DATETIME_DELTA = datetime.timedelta(days=5)
